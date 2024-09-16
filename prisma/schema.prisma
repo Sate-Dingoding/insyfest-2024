@@ -8,7 +8,45 @@ generator client {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  name  String
-  email String  @unique
+  id        String      @id @default(uuid())
+  email     String      @unique
+  username  String      
+  password  String
+  fullName  String
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @updatedAt @map("updated_at")
+  task      Task[]      @relation("RelationUserTask")
+  course    Course[]    @relation("RelationUserCourse")
+}
+
+model Task {
+  id          String       @id @default(uuid())
+  name        String
+  startTime   DateTime
+  endTime     DateTime
+  details     String?
+  status      String     @default("TO_DO")
+  category    String       @default("uncategorized")
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @updatedAt @map("updated_at")
+  user   User              @relation("RelationUserTask", fields: [id], references: [id])
+  userId String
+}
+
+model Course {
+  id          String       @id @default(uuid())
+  name        String
+  user   User              @relation("RelationUserCourse", fields: [id], references: [id])
+  notes       Notes[]   @relation("RelationCourseNotes")
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @updatedAt @map("updated_at")
+}
+
+model Notes {
+  id          String       @id @default(uuid())
+  title       String
+  content     String?
+  course      Course    @relation("RelationCourseNotes", fields: [id], references: [id])
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @updatedAt @map("updated_at")
 }
