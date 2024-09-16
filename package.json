@@ -10,13 +10,18 @@
   },
   "dependencies": {
     "@prisma/client": "^5.19.1",
+    "@types/bcrypt": "^5.0.2",
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.5",
+    "envalid": "^8.0.0",
+    "joi": "^17.13.3",
     "next": "14.2.11",
     "prisma": "^5.19.1",
     "react": "^18",
     "react-dom": "^18"
   },
   "devDependencies": {
-    "@types/node": "^20",
+    "@types/node": "^20.16.5",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.4.20",
