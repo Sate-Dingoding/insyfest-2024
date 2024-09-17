@@ -12,6 +12,28 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      backgroundImage: {
+        "hero-pattern": "url('/assets/background.png')",
+      },
+      borderRadius: {
+        "3xl": "40px",
+        "4xl": "47px",
+      },
+      fontFamily: {
+        mono: ["Space Grotesk","Fira Code", "monospace"],
+        montserrat: ["Montserrat", "sans-serif"],
+      },
+      textColor: {
+        'navy-blue' : '#373e58',
+        'placeholder' : '#D3D3D3'
+      },
+      borderColor: {
+        'navy-blue' : '#373e58'
+      },
+      backgroundColor: {
+        'navy-blue' : '#373e58',
+        'light-blue': '#4d5f7c'
+      }
     },
   },
   plugins: [],
