@@ -7,7 +7,7 @@ export const RegisterUserVal = Joi.object({
     fullName: Joi.string().required()
 })
 
-export const loginSchema = Joi.object({
-    nama_user: Joi.string().required(),
-    password: Joi.string().required(),
+export const LoginUserVal = Joi.object({
+    email: Joi.string().email({ tlds: { allow: false } }).required(),
+    password: Joi.string().required()
 });

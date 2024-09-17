@@ -4,3 +4,8 @@ export interface CreateUserModel {
   password: string;
   fullName: string;
 }
+
+export interface LoginUserModel {
+  email: string;
+  password: string;
+}
