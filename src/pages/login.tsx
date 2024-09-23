@@ -76,10 +76,10 @@ export default function Login() {
                 Login
               </button>
               {errorMessage && (
-                <p className="text-red-500 mt-4">{errorMessage}</p>
+                <p className="text-red-500 font-bold mt-4">{errorMessage}</p>
               )}
               {successMessage && (
-                <p className="text-green-500 mt-4">{successMessage}</p>
+                <p className="text-green-500 font-bold mt-4">{successMessage}</p>
               )}
             </form>
           </div>

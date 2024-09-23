@@ -25,14 +25,16 @@ const config: Config = {
       },
       textColor: {
         'navy-blue' : '#373e58',
-        'placeholder' : '#D3D3D3'
+        'placeholder' : '#D3D3D3',
+        'pink' : '#D79EB8'
       },
       borderColor: {
         'navy-blue' : '#373e58'
       },
       backgroundColor: {
         'navy-blue' : '#373e58',
-        'light-blue': '#4d5f7c'
+        'light-blue': '#4d5f7c',
+        'beige' : '#faebe6'
       }
     },
   },
