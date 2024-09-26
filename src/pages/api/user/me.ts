@@ -10,9 +10,7 @@ const prisma = new PrismaClient();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "GET") {
-    try {
-      console.log(req.headers.authorization);
-      
+    try {      
       const token = req.headers.authorization?.split(" ")[1];
 
       if (!token) {

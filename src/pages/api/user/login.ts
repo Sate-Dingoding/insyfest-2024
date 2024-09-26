@@ -60,7 +60,6 @@ export default async function handler(
     } catch (error) {
       responseError(res, false, error);
       return;
-      // res.status(400).json({ error: "User creation failed" });
     }
   } else {
     res.status(405).json({ message: "Method Not Allowed" });

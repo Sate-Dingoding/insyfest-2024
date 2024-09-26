@@ -9,3 +9,7 @@ export interface LoginUserModel {
   email: string;
   password: string;
 }
+
+export interface NotesModel {
+  notes: string;
+}
