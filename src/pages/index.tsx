@@ -6,9 +6,9 @@ export default function Home() {
       <Sidebar></Sidebar>
       <div className="ms-80 mt-6">
         <p className="text-4xl text-navy-blue font-medium">Have A nice day, <span className="font-bold">Agnella!</span></p>
-        {/* <div> */}
-
-        {/* </div> */}
+        <div className="">
+          
+        </div>
       </div>
       {/* <div className="p-6 bg-gray-100 min-h-screen">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

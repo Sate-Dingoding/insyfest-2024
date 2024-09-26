@@ -17,3 +17,7 @@ export const generateAccessToken = (
 export const validateAccessToken = (token: string) => {
   return jwt.verify(token, env.SECRET_ACCESS_TOKEN);
 };
+
+export function verifyAccessToken(token: string) {
+  return jwt.verify(token, env.SECRET_ACCESS_TOKEN);
+}
