@@ -37,6 +37,7 @@ model Task {
 model Course {
   id          String       @id @default(uuid())
   name        String
+  color       String      @default("#D79EB8")
   user   User              @relation("RelationUserCourse", fields: [id], references: [id])
   notes       Notes[]   @relation("RelationCourseNotes")
   createdAt DateTime    @default(now()) @map("created_at")
