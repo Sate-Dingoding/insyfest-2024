@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "@/components/Sidebar";
 import AddCourseModal from "@/components/AddCourseModal";
+import { useRouter } from "next/router";
 
 export default function Home() {
   const [user, setUser] = useState({ username: "", email: "" });
-
+  const router = useRouter();
   interface Course {
     id: string;
     name: string;
@@ -32,7 +33,6 @@ export default function Home() {
       const result = await response.json();
       if (result.success) {
         setCourses(result.data.courses);
-        // handleCloseModal();
       } else {
         console.error(result.message);
       }
@@ -83,6 +83,10 @@ export default function Home() {
     fetchCoursesData();
   };
 
+  const handleCourseClick = (courseId: string) => {
+    router.push(`/notes/${courseId}`);
+  };
+
   return (
     <div className="relative w-full">
       <Sidebar />
@@ -108,7 +112,10 @@ export default function Home() {
                   src={`/assets/${course.color.replace("#", "")}.png`}
                   alt="folder"
                 />
-                <div className="absolute inset-0 flex items-end justify-center text-navy-blue font-bold text-xl cursor-pointer">
+
+                <div className="absolute inset-0 flex items-end justify-center text-navy-blue font-bold text-xl cursor-pointer"
+                onClick={() => handleCourseClick(course.id)}
+                >
                   <p className="bg-beige mb-4 min-w-[248px] text-center py-2 rounded-lg">
                     {course.name}
                   </p>

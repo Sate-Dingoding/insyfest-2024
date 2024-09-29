@@ -1,8 +1,10 @@
 import Sidebar from "@/components/Sidebar";
 import AddCourseModal from "@/components/AddCourseModal";
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 export default function Home() {
+  const router = useRouter();
   const [user, setUser] = useState({ username: "", email: "" });
 
   interface Course {
@@ -83,6 +85,10 @@ export default function Home() {
     fetchCoursesData();
   };
 
+  const handleCourseClick = (courseId: string) => {
+    router.push(`/notes/${courseId}`);
+  };
+
   return (
     <div className="relative w-full">
       <Sidebar></Sidebar>
@@ -98,7 +104,9 @@ export default function Home() {
         <div className="grid grid-cols-2 gap-2 p-4 bg-light-blue-100 rounded-2rem mt-6">
           {/* Upcoming Tasks Card */}
           <div className="bg-white border-2 border-blue-100 rounded-2xl p-4">
-            <p className="text-xl font-bold text-navy-blue border-b-2 border-light-blue-100">Upcoming tasks</p>
+            <p className="text-xl font-bold text-navy-blue border-b-2 border-light-blue-100">
+              Upcoming tasks
+            </p>
             <div>
               <div className="flex justify-between border-t border-light-blue-100">
                 <p className="text-pink font-bold">
@@ -166,7 +174,10 @@ export default function Home() {
                       src={`/assets/${course.color.replace("#", "")}.png`}
                       alt="folder"
                     />
-                    <div className="absolute inset-0 flex items-end justify-center text-navy-blue font-bold text-xl cursor-pointer">
+                    <div
+                      className="absolute inset-0 flex items-end justify-center text-navy-blue font-bold text-xl cursor-pointer"
+                      onClick={() => handleCourseClick(course.id)}
+                    >
                       <p className="bg-beige mb-4 min-w-[248px] text-center py-2 rounded-lg">
                         {course.name}
                       </p>
