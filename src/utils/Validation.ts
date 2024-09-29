@@ -33,3 +33,12 @@ export const AddNoteValidation = Joi.object({
     content: Joi.string(),
     course: Joi.string().required()
 })
+
+export const AddTaskValidation = Joi.object({
+    name: Joi.string().required(),
+    startTime: Joi.string().required(),
+    endTime: Joi.string().required(),
+    details: Joi.string(),
+    status: Joi.string().required(),
+    category: Joi.string().required()
+})

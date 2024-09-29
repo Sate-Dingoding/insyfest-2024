@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 const Sidebar = () => {
   const [user, setUser] = useState({ username: '', email: '' });
-
+  const router = useRouter();
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const token = localStorage.getItem('token'); 
-        const router = useRouter();
         if (!token) {
           router.push('/login');
           console.error('No token found');
@@ -37,9 +36,12 @@ const Sidebar = () => {
     fetchUserData();
   }, []);
 
+  const handleLogoClick = () => {
+    router.push('/');
+  }
   return (
     <div className="fixed left-0 top-0 bottom-0 w-[280px] bg-beige h-screen rounded-e-[21px] flex flex-col items-start pt-6 pl-6">
-      <img src="/assets/logo-with-text.png" alt="Logo" className="w-[208px]" />
+      <img src="/assets/logo-with-text.png" alt="Logo" className="w-[208px] cursor-pointer" onClick={handleLogoClick}/>
       <div className='font-mono text-2xl text-navy-blue font-medium flex items-center mt-20'>
         <img src="/assets/calendar_today.png" alt="icon" className='w-[50px] h-[50px]' />
         <a href="/calendar" className='ms-2'>Calendar</a>

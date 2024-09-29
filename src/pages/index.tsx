@@ -12,8 +12,21 @@ export default function Home() {
     name: string;
     color: string;
   }
+
+  interface Task {
+    id: string;
+    name: string;
+    startTime: string;
+    endTime: string;
+    details: string;
+    status: string;
+    category: string;
+  }
+
   const [courses, setCourses] = useState<Course[]>([]);
+  const [tasks, setTasks] = useState<Task[]>([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
+
   const fetchCoursesData = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -35,12 +48,40 @@ export default function Home() {
       const result = await response.json();
       if (result.success) {
         setCourses(result.data.courses);
-        // handleCloseModal();
       } else {
         console.error(result.message);
       }
     } catch (error) {
       console.error("Error fetching courses:", error);
+    }
+  };
+
+  const fetchTasksData = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        console.error("No token found");
+        router.push("/login");
+        return;
+      }
+
+      const response = await fetch("/api/tasks/getAll", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        setTasks(result.data.tasks);
+      } else {
+        console.error(result.message);
+      }
+    } catch (error) {
+      console.error("Error fetching tasks:", error);
     }
   };
 
@@ -76,6 +117,7 @@ export default function Home() {
 
     fetchUserData();
     fetchCoursesData();
+    fetchTasksData();
   }, []);
 
   const handleAddCourseClick = () => {
@@ -90,6 +132,38 @@ export default function Home() {
   const handleCourseClick = (courseId: string) => {
     router.push(`/notes/${courseId}`);
   };
+
+  function formatDateTimeRange(startTime: string, endTime: string) {
+    const dateOptions: Intl.DateTimeFormatOptions = {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    };
+    const timeOptions: Intl.DateTimeFormatOptions = {
+      hour: "2-digit",
+      minute: "2-digit",
+    };
+
+    const date = new Date(startTime).toLocaleDateString("en-GB", dateOptions);
+    const startTimeFormatted = new Date(startTime)
+      .toLocaleTimeString([], timeOptions)
+      .replace(":", ".");
+    const endTimeFormatted = new Date(endTime)
+      .toLocaleTimeString([], timeOptions)
+      .replace(":", ".");
+
+    return `${date} - ${startTimeFormatted}-${endTimeFormatted}`;
+  }
+  // function formatTime(dateTime: string) {
+  //     const options: Intl.DateTimeFormatOptions = { hour: '2-digit', minute: '2-digit' };
+  //     return new Date(dateTime).toLocaleTimeString([], options).replace(':', '.');
+  // }
+  // const formatTime = (timeString: string) => {
+  //   const date = new Date(timeString);
+  //   return `${date.getUTCDate()}-${
+  //     date.getUTCMonth() + 1
+  //   }-${date.getUTCFullYear()} ${date.getUTCHours()}:${date.getUTCMinutes()}`;
+  // };
 
   return (
     <div className="relative w-full">
@@ -202,29 +276,81 @@ export default function Home() {
                 <p className="text-2xl mt-2 font-bold mx-2 text-navy-blue border-b-2 border-light-blue-100 pb-2 text-center">
                   Not started
                 </p>
+                {tasks
+                  .filter((task) => task.status === "not-started")
+                  .map((task) => (
+                    <div
+                      key={task.id}
+                      className="mx-2 my-1 border-2 border-light-blue-100 px-1 rounded-lg"
+                    >
+                      <p className="text-pink font-bold border-b border-pink">
+                        {task.name}
+                      </p>
+                      <p className="text-xs text-black font-montserrat text-left font-medium">
+                        {formatDateTimeRange(task.startTime, task.endTime)}
+                      </p>
+                    </div>
+                  ))}
               </div>
               <div className="w-[23%] rounded-2xl border-2 border-light-blue-100 min-h-96">
                 <p className="text-2xl mt-2 font-bold mx-2 text-navy-blue border-b-2 border-yellow pb-2 text-center">
                   In progress
                 </p>
+                {tasks
+                  .filter((task) => task.status === "in-progress")
+                  .map((task) => (
+                    <div
+                      key={task.id}
+                      className="mx-2 my-1 border-2 border-light-blue-100 px-1 rounded-lg"
+                    >
+                      <p className="text-pink font-bold border-b border-yellow">
+                        {task.name}
+                      </p>
+                      <p className="text-xs text-black font-montserrat text-left font-medium">
+                        {formatDateTimeRange(task.startTime, task.endTime)}
+                      </p>
+                    </div>
+                  ))}
               </div>
               <div className="w-[23%] rounded-2xl border-2 border-light-blue-100 min-h-96">
                 <p className="text-2xl mt-2 font-bold mx-2 text-navy-blue border-b-2 border-green pb-2 text-center">
                   Completed
                 </p>
+                {tasks
+                  .filter((task) => task.status === "completed")
+                  .map((task) => (
+                    <div
+                      key={task.id}
+                      className="mx-2 my-1 border-2 border-light-blue-100 px-1 rounded-lg"
+                    >
+                      <p className="text-pink font-bold border-b border-yellow">
+                        {task.name}
+                      </p>
+                      <p className="text-xs text-black font-montserrat text-left font-medium">
+                        {formatDateTimeRange(task.startTime, task.endTime)}
+                      </p>
+                    </div>
+                  ))}
               </div>
               <div className="w-[23%] rounded-2xl border-2 border-light-blue-100 min-h-96">
                 <p className="text-2xl mt-2 font-bold mx-2 text-navy-blue border-b-2 border-pink pb-2 text-center">
                   Blocked
                 </p>
-                <div className="mx-2 my-1 border-2 border-light-blue-100 px-1 rounded-lg">
-                  <p className="text-pink font-bold border-b border-pink">
-                    Welcoming party design MABA CUP
-                  </p>
-                  <p className="text-xs text-black font-montserrat text-left font-medium">
-                    18 Sep 2024 - 18:30
-                  </p>
-                </div>
+                {tasks
+                  .filter((task) => task.status === "blocked")
+                  .map((task) => (
+                    <div
+                      key={task.id}
+                      className="mx-2 my-1 border-2 border-light-blue-100 px-1 rounded-lg"
+                    >
+                      <p className="text-pink font-bold border-b border-yellow">
+                        {task.name}
+                      </p>
+                      <p className="text-xs text-black font-montserrat text-left font-medium">
+                        {formatDateTimeRange(task.startTime, task.endTime)}
+                      </p>
+                    </div>
+                  ))}
               </div>
             </div>
           </div>
