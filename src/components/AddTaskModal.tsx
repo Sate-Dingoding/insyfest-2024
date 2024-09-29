@@ -18,7 +18,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({ onClose, isVisible }) => {
   const handleCreate = async () => {
     try {
       const token = localStorage.getItem("token");
-      if(!token) {
+      if (!token) {
         throw new Error("Login first to access this route");
       }
       const startDateTime = new Date(`${taskDate}T${startTime}`);
@@ -57,6 +57,8 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({ onClose, isVisible }) => {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+        console.log(event.target);
+        
         onClose();
       }
     };
@@ -90,9 +92,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({ onClose, isVisible }) => {
 
         <div className="flex space-x-4 mb-4">
           <div className="flex flex-col w-1/2">
-            <label className="text-lg font-bold text-navy-blue mb-1">
-              Date
-            </label>
+            <label className="text-lg font-bold text-navy-blue mb-1">Date</label>
             <input
               type="date"
               value={taskDate}
@@ -127,9 +127,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({ onClose, isVisible }) => {
         </div>
 
         <div className="mb-4">
-          <label className="text-lg font-bold text-navy-blue mb-1">
-            Add Note
-          </label>
+          <label className="text-lg font-bold text-navy-blue mb-1">Add Note</label>
           <textarea
             value={taskDetails}
             onChange={(e) => setTaskDetails(e.target.value)}
@@ -139,9 +137,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({ onClose, isVisible }) => {
         </div>
 
         <div className="mb-4">
-          <label className="text-lg font-bold text-navy-blue mb-1">
-            Status
-          </label>
+          <label className="text-lg font-bold text-navy-blue mb-1">Status</label>
           <select
             value={taskStatus}
             onChange={(e) => setTaskStatus(e.target.value)}
@@ -155,9 +151,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({ onClose, isVisible }) => {
         </div>
 
         <div className="mb-4">
-          <label className="text-lg font-bold text-navy-blue mb-1">
-            Category
-          </label>
+          <label className="text-lg font-bold text-navy-blue mb-1">Category</label>
           <select
             value={taskCategory}
             onChange={(e) => setTaskCategory(e.target.value)}

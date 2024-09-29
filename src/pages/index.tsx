@@ -132,8 +132,8 @@ export default function Home() {
   };
 
   const handleCloseTaskModal = () => {
-    setIsModalVisible(false);
-    fetchCoursesData();
+    setIsTaskModalVisible(false);
+    fetchTasksData();
   };
 
   const handleAddTaskClick = () => {
