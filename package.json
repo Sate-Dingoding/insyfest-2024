@@ -8,6 +8,9 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "prisma": {
+    "seed": "ts-node src/seeder/seed.ts"
+  },
   "dependencies": {
     "@prisma/client": "^5.19.1",
     "@types/bcrypt": "^5.0.2",

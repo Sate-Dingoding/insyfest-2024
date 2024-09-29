@@ -10,25 +10,25 @@ export default function Home() {
           {/* Upcoming Tasks Card */}
           <div className="bg-white border border-blue-100 rounded-2xl p-4">
             <p className="text-xl font-bold text-navy-blue">Upcoming tasks</p>
-            <div className="mt-2">
-              <div className="flex justify-between border-t">
+            <div>
+              <div className="flex justify-between border-t border-light-blue-100">
                 <p className="text-pink font-bold">Welcoming party design MABA CUP</p>
                 {/* <div className="text-sm text-black font-montserrat items-end"></div> */}
-                <p className="text-sm text-black font-montserrat text-right">18 Sep 2024<br />18:30</p>
+                <p className="text-sm text-black font-montserrat text-right font-medium">18 Sep 2024<br />18:30</p>
               </div>
-              <div className="flex justify-between border-t">
+              <div className="flex justify-between border-t border-light-blue-100">
                 <p className="text-pink font-bold">Praktikum Dasar Pemrograman Modul 1</p>
-                <p className="text-sm text-black font-montserrat text-right">20 Sep 2024<br />15:30-17:30</p>
+                <p className="text-sm text-black font-montserrat text-right font-medium">20 Sep 2024<br />15:30-17:30</p>
               </div>
-              <div className="flex justify-between border-t">
+              <div className="flex justify-between border-t border-light-blue-100">
                 <p className="text-pink font-bold">Quiz 1 Aljabar Linear</p>
-                <p className="text-sm text-black font-montserrat text-right">21 Sep 2024<br />08:00-11:00</p>
+                <p className="text-sm text-black font-montserrat text-right font-medium">21 Sep 2024<br />08:00-11:00</p>
               </div>
             </div>
           </div>
           {/* Calendar Card */}
           <div className="bg-white border border-blue-100 rounded-2xl p-4 relative">
-            <p className="text-xl font-bold text-navy-blue">Calendar</p>
+            <p className="text-xl font-bold text-navy-blue border-b border-light-blue-100">Calendar</p>
             <button className="absolute top-4 right-4 text-gray-500">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                 <path d="M3.172 3.172a4 4 0 015.656 0l.83.83a4 4 0 010 5.656l-5.656 5.656a4 4 0 01-5.656-5.656l.83-.83a4 4 0 015.656 0z" />
@@ -39,13 +39,13 @@ export default function Home() {
           {/* Upcoming Courses Card */}
           <div className="bg-white border border-blue-100 rounded-2xl p-4 relative col-span-2">
             <p className="text-xl font-bold text-navy-blue">Courses</p>
-            <button className="absolute top-4 right-4 text-gray-500">
+            <button className="absolute top-4 right-4 text-gray-500 text-xl">
               +
             </button>
           </div>
           <div className="bg-white border border-blue-100 rounded-2xl p-4 relative col-span-2">
             <p className="text-xl font-bold text-navy-blue">Tasks progress</p>
-            <button className="absolute top-4 right-4 text-gray-500">
+            <button className="absolute top-4 right-4 text-gray-500 text-xl">
               +
             </button>
           </div>

@@ -11,6 +11,7 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        'light-blue-100' : '#d7e8fe'
       },
       backgroundImage: {
         "hero-pattern": "url('/assets/background.png')",

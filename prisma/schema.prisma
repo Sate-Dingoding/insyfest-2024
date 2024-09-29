@@ -10,10 +10,10 @@ generator client {
 model User {
   id        String      @id @default(uuid())
   email     String      @unique
-  username  String      
+  username  String
   password  String
   fullName  String
-  quickNote String?      
+  quickNote String?
   createdAt DateTime    @default(now()) @map("created_at")
   updatedAt DateTime    @updatedAt @map("updated_at")
   task      Task[]      @relation("RelationUserTask")
@@ -21,34 +21,39 @@ model User {
 }
 
 model Task {
-  id          String       @id @default(uuid())
+  id          String     @id @default(uuid())
   name        String
   startTime   DateTime
   endTime     DateTime
   details     String?
   status      String     @default("TO_DO")
-  category    String       @default("uncategorized")
-  createdAt DateTime    @default(now()) @map("created_at")
-  updatedAt DateTime    @updatedAt @map("updated_at")
-  user   User              @relation("RelationUserTask", fields: [id], references: [id])
-  userId String
+  category    String     @default("uncategorized")
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt @map("updated_at")
+  
+  userId      String     // Foreign key field
+  user        User       @relation("RelationUserTask", fields: [userId], references: [id])
 }
 
 model Course {
-  id          String       @id @default(uuid())
+  id          String     @id @default(uuid())
   name        String
-  color       String      @default("#D79EB8")
-  user   User              @relation("RelationUserCourse", fields: [id], references: [id])
-  notes       Notes[]   @relation("RelationCourseNotes")
-  createdAt DateTime    @default(now()) @map("created_at")
-  updatedAt DateTime    @updatedAt @map("updated_at")
+  color       String     @default("#D79EB8")
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt @map("updated_at")
+  
+  userId      String     // Foreign key field
+  user        User       @relation("RelationUserCourse", fields: [userId], references: [id])
+  notes       Notes[]    @relation("RelationCourseNotes")
 }
 
 model Notes {
-  id          String       @id @default(uuid())
+  id          String     @id @default(uuid())
   title       String
   content     String?
-  course      Course    @relation("RelationCourseNotes", fields: [id], references: [id])
-  createdAt DateTime    @default(now()) @map("created_at")
-  updatedAt DateTime    @updatedAt @map("updated_at")
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt @map("updated_at")
+  
+  courseId    String     // Foreign key field
+  course      Course     @relation("RelationCourseNotes", fields: [courseId], references: [id])
 }
