@@ -21,8 +21,7 @@ enum CourseColor {
     "#EEBC82",
     "#FFF4BB",
     "#CCEFC7",
-    "#D7E8FE",
-    "FAEBE6"
+    "#D7E8FE"
 }
 export const AddCourseValidation = Joi.object({
     name: Joi.string().required(),

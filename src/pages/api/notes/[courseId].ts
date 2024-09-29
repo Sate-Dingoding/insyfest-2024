@@ -21,11 +21,10 @@ export default async function handler(
         throw new CustomError(StatusCodes.BAD_REQUEST, "Course ID is required");
       }
 
-      // Query untuk mengambil course berdasarkan courseId
       const course = await prisma.course.findUnique({
         where: { id: courseId as string },
         include: {
-          notes: true,  // Mengambil notes yang berelasi dengan course tersebut
+          notes: true,
         },
       });
 
@@ -33,10 +32,9 @@ export default async function handler(
         throw new CustomError(StatusCodes.NOT_FOUND, "Course not found");
       }
 
-      // Mengirimkan response berisi course dan notes-nya
       responseSuccess(res, StatusCodes.OK, true, "Notes retrieved successfully", {
         courseName: course.name,
-        notes: course.notes, // Daftar notes yang berelasi dengan course tersebut
+        notes: course.notes,
       });
     } catch (error) {
       responseError(res, false, error);
