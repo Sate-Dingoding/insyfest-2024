@@ -1,5 +1,4 @@
 import Joi from "joi";
-import { join } from "path";
 
 export const RegisterUserVal = Joi.object({
     email: Joi.string().email({ tlds: { allow: false } }).required(),
@@ -28,4 +27,10 @@ enum CourseColor {
 export const AddCourseValidation = Joi.object({
     name: Joi.string().required(),
     color: Joi.string().valid(...Object.values(CourseColor)).required()
+})
+
+export const AddNoteValidation = Joi.object({
+    title: Joi.string().required(),
+    content: Joi.string(),
+    course: Joi.string().required()
 })
