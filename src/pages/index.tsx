@@ -1,8 +1,45 @@
 import Sidebar from "@/components/Sidebar";
+import AddCourseModal from "@/components/AddCourseModal";
 import React, { useEffect, useState } from "react";
 
 export default function Home() {
   const [user, setUser] = useState({ username: "", email: "" });
+
+  interface Course {
+    id: string;
+    name: string;
+    color: string;
+  }
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const fetchCoursesData = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        console.error("No token found");
+        return;
+      }
+
+      const response = await fetch("/api/courses/getAll", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        setCourses(result.data.courses);
+        // handleCloseModal();
+      } else {
+        console.error(result.message);
+      }
+    } catch (error) {
+      console.error("Error fetching courses:", error);
+    }
+  };
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -34,10 +71,25 @@ export default function Home() {
     };
 
     fetchUserData();
+    fetchCoursesData();
   }, []);
+
+  const handleAddCourseClick = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalVisible(false);
+    fetchCoursesData();
+  };
+
   return (
     <div className="relative w-full">
       <Sidebar></Sidebar>
+      <AddCourseModal
+        onClose={handleCloseModal}
+        isVisible={isModalVisible}
+      ></AddCourseModal>
       <div className="ms-80 mt-6 me-6">
         <p className="text-4xl text-navy-blue font-medium">
           Have A nice day,{" "}
@@ -46,13 +98,12 @@ export default function Home() {
         <div className="grid grid-cols-2 gap-2 p-4 bg-light-blue-100 rounded-2rem mt-6">
           {/* Upcoming Tasks Card */}
           <div className="bg-white border-2 border-blue-100 rounded-2xl p-4">
-            <p className="text-xl font-bold text-navy-blue">Upcoming tasks</p>
+            <p className="text-xl font-bold text-navy-blue border-b-2 border-light-blue-100">Upcoming tasks</p>
             <div>
               <div className="flex justify-between border-t border-light-blue-100">
                 <p className="text-pink font-bold">
                   Welcoming party design MABA CUP
                 </p>
-                {/* <div className="text-sm text-black font-montserrat items-end"></div> */}
                 <p className="text-sm text-black font-montserrat text-right font-medium">
                   18 Sep 2024
                   <br />
@@ -81,7 +132,7 @@ export default function Home() {
           </div>
           {/* Calendar Card */}
           <div className="bg-white border-2 border-blue-100 rounded-2xl p-4 relative">
-            <p className="text-xl font-bold text-navy-blue border-b border-light-blue-100">
+            <p className="text-xl font-bold text-navy-blue border-b-2 border-light-blue-100">
               Calendar
             </p>
             <button className="absolute top-4 right-4 text-gray-500">
@@ -98,59 +149,36 @@ export default function Home() {
           </div>
           {/* Upcoming Courses Card */}
           <div className="bg-white border-2 border-blue-100 rounded-2xl p-4 relative col-span-2">
-            <p className="text-xl font-bold text-navy-blue border-b border-light-blue-100 pb-2">
+            <p className="text-xl font-bold text-navy-blue border-b-2 border-light-blue-100 pb-2">
               Courses
             </p>
-            <button className="absolute top-4 right-4 text-gray-500 text-xl">
+            <button
+              className="absolute top-4 right-4 text-gray-500 text-xl"
+              onClick={handleAddCourseClick}
+            >
               <img src="/assets/add.png" alt="+" />
             </button>
             <div className="w-full overflow-x-auto hide-scrollbar">
               <div className="flex space-x-8 mt-4">
-                <div className="relative flex-shrink-0">
-                  <img src="/assets/CCEFC7.png" alt="folder" />
-                  <div className="absolute inset-0 flex items-end justify-center text-navy-blue font-bold text-xl">
-                    <p className="bg-beige mb-4 min-w-[248px] text-center py-2 rounded-lg">
-                      Aljabar Linear
-                    </p>
+                {courses.map((course) => (
+                  <div key={course.id} className="relative flex-shrink-0">
+                    <img
+                      src={`/assets/${course.color.replace("#", "")}.png`}
+                      alt="folder"
+                    />
+                    <div className="absolute inset-0 flex items-end justify-center text-navy-blue font-bold text-xl cursor-pointer">
+                      <p className="bg-beige mb-4 min-w-[248px] text-center py-2 rounded-lg">
+                        {course.name}
+                      </p>
+                    </div>
                   </div>
-                </div>
-                <div className="relative flex-shrink-0">
-                  <img src="/assets/CCEFC7.png" alt="folder" />
-                  <div className="absolute inset-0 flex items-end justify-center text-navy-blue font-bold text-xl">
-                    <p className="bg-beige mb-4 min-w-[248px] text-center py-2 rounded-lg">
-                      Aljabar Linear
-                    </p>
-                  </div>
-                </div>
-                <div className="relative flex-shrink-0">
-                  <img src="/assets/CCEFC7.png" alt="folder" />
-                  <div className="absolute inset-0 flex items-end justify-center text-navy-blue font-bold text-xl">
-                    <p className="bg-beige mb-4 min-w-[248px] text-center py-2 rounded-lg">
-                      Aljabar Linear
-                    </p>
-                  </div>
-                </div>
-                <div className="relative flex-shrink-0">
-                  <img src="/assets/CCEFC7.png" alt="folder" />
-                  <div className="absolute inset-0 flex items-end justify-center text-navy-blue font-bold text-xl">
-                    <p className="bg-beige mb-4 min-w-[248px] text-center py-2 rounded-lg">
-                      Aljabar Linear
-                    </p>
-                  </div>
-                </div>
-                <div className="relative flex-shrink-0">
-                  <img src="/assets/CCEFC7.png" alt="folder" />
-                  <div className="absolute inset-0 flex items-end justify-center text-navy-blue font-bold text-xl">
-                    <p className="bg-beige mb-4 min-w-[248px] text-center py-2 rounded-lg">
-                      Aljabar Linear
-                    </p>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>
+          {/* Tasks Progress Cards */}
           <div className="bg-white border-2 border-blue-100 rounded-2xl p-4 relative col-span-2">
-            <p className="text-xl font-bold text-navy-blue border-b border-light-blue-100 pb-2">
+            <p className="text-xl font-bold text-navy-blue border-b-2 border-light-blue-100 pb-2">
               Tasks progress
             </p>
             <button className="absolute top-4 right-4 text-gray-500 text-xl">
