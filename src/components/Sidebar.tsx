@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 const Sidebar = () => {
   const [user, setUser] = useState({ username: '', email: '' });
@@ -7,8 +8,9 @@ const Sidebar = () => {
     const fetchUserData = async () => {
       try {
         const token = localStorage.getItem('token'); 
-
+        const router = useRouter();
         if (!token) {
+          router.push('/login');
           console.error('No token found');
           return;
         }
@@ -53,10 +55,6 @@ const Sidebar = () => {
       <div className='font-mono text-2xl text-navy-blue font-medium flex items-center mt-4'>
         <img src="/assets/folder.png" alt="icon" />
         <a href="/courses" className='ms-2'>Courses</a>
-      </div>
-      <div className='font-mono text-2xl text-navy-blue font-medium flex items-center mt-4'>
-        <img src="/assets/Group.png" alt="icon" />
-        <a href="/notes" className='ms-2'>Notes</a>
       </div>
       <div className='flex-grow'></div>
       <div className='font-mono text-2xl text-navy-blue font-medium flex items-center mt-8 justify-self-end mb-8'>

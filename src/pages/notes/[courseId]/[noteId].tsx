@@ -44,6 +44,11 @@ export default function Notes() {
   const handleUpdate = () => {
     if (noteId) {
       const token = localStorage.getItem("token");
+      if(!token) {
+        console.error("No token found");
+        router.push("/login");
+        return;
+      }
       fetch(`/api/notes/update`, {
         method: "PUT",
         headers: {
