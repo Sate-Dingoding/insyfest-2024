@@ -1,5 +1,6 @@
 import Sidebar from "@/components/Sidebar";
 import AddCourseModal from "@/components/AddCourseModal";
+import AddTaskModal from "@/components/AddTaskModal";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
@@ -26,6 +27,7 @@ export default function Home() {
   const [courses, setCourses] = useState<Course[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isTaskModalVisible, setIsTaskModalVisible] = useState(false);
 
   const fetchCoursesData = async () => {
     try {
@@ -129,6 +131,15 @@ export default function Home() {
     fetchCoursesData();
   };
 
+  const handleCloseTaskModal = () => {
+    setIsModalVisible(false);
+    fetchCoursesData();
+  };
+
+  const handleAddTaskClick = () => {
+    setIsTaskModalVisible(true);
+  }
+
   const handleCourseClick = (courseId: string) => {
     router.push(`/notes/${courseId}`);
   };
@@ -154,16 +165,6 @@ export default function Home() {
 
     return `${date} - ${startTimeFormatted}-${endTimeFormatted}`;
   }
-  // function formatTime(dateTime: string) {
-  //     const options: Intl.DateTimeFormatOptions = { hour: '2-digit', minute: '2-digit' };
-  //     return new Date(dateTime).toLocaleTimeString([], options).replace(':', '.');
-  // }
-  // const formatTime = (timeString: string) => {
-  //   const date = new Date(timeString);
-  //   return `${date.getUTCDate()}-${
-  //     date.getUTCMonth() + 1
-  //   }-${date.getUTCFullYear()} ${date.getUTCHours()}:${date.getUTCMinutes()}`;
-  // };
 
   return (
     <div className="relative w-full">
@@ -172,6 +173,7 @@ export default function Home() {
         onClose={handleCloseModal}
         isVisible={isModalVisible}
       ></AddCourseModal>
+      <AddTaskModal onClose={handleCloseTaskModal} isVisible = {isTaskModalVisible}></AddTaskModal>
       <div className="ms-80 mt-6 me-6">
         <p className="text-4xl text-navy-blue font-medium">
           Have A nice day,{" "}
@@ -269,7 +271,7 @@ export default function Home() {
               Tasks progress
             </p>
             <button className="absolute top-4 right-4 text-gray-500 text-xl">
-              <img src="/assets/add.png" alt="+" />
+              <img src="/assets/add.png" alt="+" onClick={handleAddTaskClick}/>
             </button>
             <div className="w-full mt-4 flex justify-between">
               <div className="w-[23%] rounded-2xl border-2 border-light-blue-100 min-h-96">

@@ -36,8 +36,8 @@ export const AddNoteValidation = Joi.object({
 
 export const AddTaskValidation = Joi.object({
     name: Joi.string().required(),
-    startTime: Joi.string().required(),
-    endTime: Joi.string().required(),
+    startTime: Joi.number().required(),
+    endTime: Joi.number().required(),
     details: Joi.string(),
     status: Joi.string().required(),
     category: Joi.string().required()
